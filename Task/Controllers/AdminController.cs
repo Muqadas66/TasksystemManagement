@@ -154,6 +154,8 @@ namespace Task.Controllers
                     t.Priority.Contains(searchTerm) ||
                     (ViewBag.Users as List<User>).Any(u => u.UserID == t.AssignedUserID && u.Username.Contains(searchTerm))
                 ).ToList();
+
+               
             }
 
             
@@ -223,16 +225,16 @@ namespace Task.Controllers
         public ActionResult TaskReport()
         {
         
-            var totalTasks = db.TaskViews.Count();
+            var totalTasks = db.AssignTasks.Count();
 
           
-            var completedTasks = db.TaskViews.Count(t => t.Status == "Completed");
+            var completedTasks = db.AssignTasks.Count(t => t.Status == "Completed");
 
          
-            var inProgressTasks = db.TaskViews.Count(t => t.Status == "In Progress");
+            var inProgressTasks = db.AssignTasks.Count(t => t.Status == "In Progress");
 
          
-            var pendingTasks = db.TaskViews.Count(t => t.Status == "Pending");
+            var pendingTasks = db.AssignTasks.Count(t => t.Status == "Pending");
 
          
             double completionRate = totalTasks > 0 ? ((double)completedTasks / totalTasks) * 100 : 0;
