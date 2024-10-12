@@ -1,0 +1,79 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title>Index</title>
+   
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet" />
+    
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet" />
+    <style>
+        body {
+            background-image: url('/Content/user.png'); 
+            background-size: cover auto;
+            background-position: center;
+            background-attachment: fixed;
+            
+            color: white;
+        }
+
+        .task-container {
+            margin-top: 50px;
+            background-color: rgba(0, 0, 0, 0.7); 
+            padding: 30px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.5);
+        }
+
+        h1 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 3rem;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .task-link {
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            display: inline-block;
+            text-align: center;
+            padding: 10px 20px; 
+            background-color: #007bff;
+            color: white;
+            border-radius: 8px;
+            font-weight: bold;
+            width: auto; 
+        }
+
+            .task-link:hover {
+                background-color: #0056b3;
+                color: white;
+            }
+
+        .button-group {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap; 
+            gap: 10px; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container task-container">
+        <h1>Welcome</h1>
+
+        <div class="button-group">
+            <p>@Html.ActionLink("View Assign Tasks", "UserTasks", "User", null, new { @class = "task-link" })</p>
+            <p>@Html.ActionLink("Create New Task", "GenerateTask", "User", null, new { @class = "task-link" })</p>
+            <p>@Html.ActionLink("View Created Task", "ViewCreatedTasks", "User", null, new { @class = "task-link" })</p>
+            <p>@Html.ActionLink("Edit Task", "ViewCreatedTasks", "User", null, new { @class = "task-link" })</p>
+            <p>@Html.ActionLink("Feedback", "TaskDetails", "User", null, new { @class = "task-link" })</p>
+        </div>
+    </div>
+</body>
+</html>

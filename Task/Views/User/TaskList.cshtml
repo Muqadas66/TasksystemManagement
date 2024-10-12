@@ -1,0 +1,52 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_LayoutUser.cshtml";
+}
+
+@model IEnumerable<AssignTasks >
+
+@{
+    ViewBag.Title = "Task List";
+}
+
+<h2>Task List</h2>
+
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>Title</th>
+            <th>Description</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Actions</th> 
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var task in Model)
+        {
+            <tr>
+                <td>@task.Title</td>
+                <td>@task.Description</td>
+                <td>
+                    @task.Status
+                    <form action="@Url.Action("UpdateTaskStatus", "User")" method="post" style="display:inline;">
+                        <input type="hidden" name="taskId" value="@task.AssignTaskID" />
+                        <select name="status" onchange="this.form.submit();">
+                            <option value="">Change Status</option>
+                            <option value="Pending" @(task.Status == "Pending" ? "selected" : "")>Pending</option>
+                            <option value="In-Process" @(task.Status == "In-Process" ? "selected" : "")>In-Process</option>
+                            <option value="Completed" @(task.Status == "Completed" ? "selected" : "")>Completed</option>
+                        </select>
+                    </form>
+                </td>
+                <td>@task.Priority</td>
+                <td>
+                    <a href="@Url.Action("EditTask", "User", new { id = task.AssignTaskID })" class="btn btn-primary">Edit</a>
+                    <a href="@Url.Action("DeleteTask", "User", new { id = task.AssignTaskID })" class="btn btn-danger" onclick="return confirm('Are you sure you want to delete this task?');">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<a href="@Url.Action("CreateTask", "User")" class="btn btn-success">Create New Task</a>

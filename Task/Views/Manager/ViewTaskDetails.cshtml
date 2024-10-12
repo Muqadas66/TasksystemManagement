@@ -1,0 +1,90 @@
+﻿@model Task.Models.TaskMonitoringViewModel
+@{
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+}
+
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> 
+
+<div class="container mt-4">
+    <h2 class="text-center text-primary mb-4">Task Details</h2>
+
+    @if (Model.Tasks != null && Model.Tasks.Any())
+    {
+        foreach (var task in Model.Tasks)
+        {
+            <div class="card mb-3 shadow-sm border-primary">
+                <div class="card-body">
+                    <h3 class="card-title">@task.Title</h3>
+                    <p class="card-text"><strong>Description:</strong> @task.Description</p>
+                    <p class="card-text"><strong>Status:</strong> <span class="badge badge-info">@task.Status</span></p>
+                    <p class="card-text"><strong>Assigned User:</strong> @Model.AssignedUsername</p>
+                    <p class="card-text"><strong>Deadline:</strong> <span class="text-danger">@task.Deadline</span></p>
+                    <p class="card-text"><strong>Priority:</strong> <span class="text-warning">@task.Priority</span></p>
+                    <p class="card-text"><strong>Category:</strong> @task.Category</p>
+                    <p class="card-text"><strong>Created By:</strong> @task.CreatedBy</p>
+                </div>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="alert alert-warning" role="alert">
+            No tasks found.
+        </div>
+    }
+
+    <h3 class="text-center text-secondary mt-5">User Activities</h3>
+
+    <div class="card shadow-sm mt-3">
+        <div class="card-body">
+            <table class="table table-striped table-hover">
+                <thead class="thead-light">
+                    <tr>
+                        <th><i class="fas fa-comment-dots"></i> Comments</th>
+                        <th><i class="fas fa-clock"></i> Last Updated</th>
+                        <th><i class="fas fa-user"></i> Username</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @if (Model.Activity != null && Model.Activity.Any())
+                    {
+                        foreach (var activity in Model.Activity)
+                        {
+                            <tr>
+                                <td>@activity.Comments</td>
+                                <td>@activity.LastUpdated</td>
+                                <td>@Model.AssignedUsername</td>
+                            </tr>
+                        }
+                    }
+                    else
+                    {
+                        <tr>
+                            <td colspan="3" class="text-center">No activities found.</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+<style>
+    .card {
+        border-radius: 15px;
+        border: 1px solid #007bff; 
+    }
+
+    .table th, .table td {
+        vertical-align: middle;
+    }
+
+    .badge {
+        font-size: 0.9em;
+    }
+
+    .card-body {
+        background-color: #f8f9fa; 
+    }
+</style>

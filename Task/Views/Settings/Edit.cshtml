@@ -1,0 +1,131 @@
+﻿@model SystemSettings
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="settings-container">
+        <div class="card">
+            <h4 class="card-header">System Settings</h4>
+            <div class="card-body">
+                @Html.HiddenFor(model => model.Id)
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.EnableNotifications, new { @class = "control-label" })
+                    <div>
+                        @Html.DropDownList("EnableNotifications", new SelectList(new List<SelectListItem>
+                                {
+                            new SelectListItem { Text = "Yes", Value = "true" },
+                            new SelectListItem { Text = "No", Value = "false" }
+                        }, "Value", "Text", Model.EnableNotifications.GetValueOrDefault() ? "true" : "false"),
+                             new { @class = "form-control" })
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.DefaultTaskPriority, new { @class = "control-label" })
+                    @Html.TextBoxFor(model => model.DefaultTaskPriority, new { @class = "form-control animated-input" })
+                </div>
+
+                <div class="form-group">
+                    @Html.LabelFor(model => model.TaskCategories, new { @class = "control-label" })
+                    @Html.TextAreaFor(model => model.TaskCategories, new { @class = "form-control animated-input" })
+                </div>
+
+                <div class="form-group text-right">
+                    <input type="submit" value="Save" class="btn btn-animated btn-save" />
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+<style>
+    
+    body {
+        background: linear-gradient(135deg, #f8f9fa, #a1c4fd);
+        font-family: 'Segoe UI', sans-serif;
+        padding: 40px;
+    }
+
+    
+    .settings-container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+    }
+
+    .card {
+        background: white;
+        border-radius: 15px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        width: 50%;
+        padding: 20px;
+        animation: fadeIn 1.2s ease-in-out;
+    }
+
+    .card-header {
+        background: #007BFF;
+        color: white;
+        padding: 10px;
+        font-size: 24px;
+        border-radius: 12px 12px 0 0;
+        text-align: center;
+    }
+
+    .card-body {
+        padding: 30px;
+    }
+
+   
+    .control-label {
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+        display: block;
+    }
+
+    
+    .animated-input {
+        background-color: #f7f7f7;
+        border: 1px solid #ced4da;
+        border-radius: 8px;
+        padding: 10px;
+        transition: all 0.3s ease;
+        width: 100%;
+    }
+
+    .animated-input:focus {
+        border-color: #007BFF;
+        box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+    }
+
+    
+    .btn-save {
+        background-color: #28a745;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 16px;
+        border-radius: 8px;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-save:hover {
+        background-color: #218838;
+    }
+
+
+    @@keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(-10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

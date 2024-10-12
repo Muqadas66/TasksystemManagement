@@ -1,0 +1,224 @@
+﻿@using System.Linq
+@model List<AssignTasks>
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+<!-- Include jQuery and Bootstrap JS -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"></script>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.10.3/font/bootstrap-icons.min.css" rel="stylesheet">
+<script>
+    $(document).ready(function () {
+        
+        $('.dropdown-item').click(function (e) {
+            e.preventDefault();
+            var filterType = $(this).data('filter');
+            var filterValue = $(this).data('value');
+
+            if (filterType === 'status') {
+                $('#status').val(filterValue);
+            } else if (filterType === 'priority') {
+                $('#priority').val(filterValue);
+            } 
+
+            
+            $('.search-form').submit();
+        });
+
+        
+        $('#search').on('input', function () {
+            var searchTerm = $(this).val();
+          
+        });
+    });
+</script>
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> <!-- For icons -->
+
+<div class="container mt-4">
+    <h2 class="text-center text-primary mb-4">All Tasks</h2>
+    <!-- Filter Form -->
+    <!-- Search Bar with Dropdown Filters -->
+    <div class="container mt-4">
+        @using (Html.BeginForm("ViewAllTasks", "Admin", FormMethod.Get, new { @class = "search-form" }))
+        {
+            <div class="input-group">
+                <input type="text" name="searchTerm" class="form-control" placeholder="Search tasks..." value="@Request.QueryString["searchTerm"]" />
+
+                <button class="btn btn-outline-light" type="submit">
+                    <i class="bi bi-search" style="color: #343a40;"></i>
+                </button>
+
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Filter
+                    </button>
+                    <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+
+                        <h6 class="dropdown-header">Title</h6>
+                        <a class="dropdown-item" href="#" data-filter="title" data-value="">All Titles</a>
+
+                        <h6 class="dropdown-header">Status</h6>
+                        <a class="dropdown-item" href="#" data-filter="status" data-value="Pending">Pending</a>
+                        <a class="dropdown-item" href="#" data-filter="status" data-value="Completed">Completed</a>
+                        <a class="dropdown-item" href="#" data-filter="status" data-value="In Progress">In Progress</a>
+                        <h6 class="dropdown-header">Priority</h6>
+                        <a class="dropdown-item" href="#" data-filter="priority" data-value="">All Priorities</a>
+                        <a class="dropdown-item" href="#" data-filter="priority" data-value="Low">Low</a>
+                        <a class="dropdown-item" href="#" data-filter="priority" data-value="Medium">Medium</a>
+                        <a class="dropdown-item" href="#" data-filter="priority" data-value="High">High</a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Hidden fields for filters -->
+            <input type="hidden" name="status" id="status" />
+            <input type="hidden" name="priority" id="priority" />
+        }
+    </div>
+
+    <div class="card shadow-lg border-0">
+        <div class="card-body">
+            <table class="table table-hover table-bordered table-striped">
+                <thead class="thead-light">
+                    <tr class="text-center">
+                        <th><i class="fas fa-tasks"></i> Task Title</th>
+                        <th><i class="fas fa-align-left"></i> Description</th>
+                        <th><i class="fas fa-calendar-alt"></i> Deadline</th>
+                        <th><i class="fas fa-flag"></i> Priority</th>
+                        <th><i class="fas fa-folder"></i> Category</th>
+                        <th><i class="fas fa-user"></i> Assigned User</th>
+                        <th><i class="fas fa-user-tie"></i> Created By</th>
+                        <th><i class="fas fa-check-circle"></i> Status</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var task in Model)
+                    {
+                        <tr class="text-center">
+                            <td>@task.Title</td>
+                            <td>@task.Description</td>
+                            <td>@task.Deadline</td>
+                            <td>
+                                @if (task.Priority == "High")
+                                {
+                                    <span class="badge badge-danger p-2"><i class="fas fa-exclamation-circle"></i> High</span>
+                                }
+                                else if (task.Priority == "Medium")
+                                {
+                                    <span class="badge badge-warning p-2"><i class="fas fa-exclamation-triangle"></i> Medium</span>
+                                }
+                                else
+                                {
+                                    <span class="badge badge-success p-2"><i class="fas fa-check-circle"></i> Low</span>
+                                }
+                            </td>
+                            <td>@task.Category</td>
+                            <td>
+                                @{
+                                    var user = (ViewBag.Users as List<User>)?.FirstOrDefault(u => u.UserID == task.AssignedUserID);
+                                    if (user != null)
+                                    {
+                                        <span class="badge badge-primary p-2"><i class="fas fa-user"></i> @user.Username</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="badge badge-warning p-2"><i class="fas fa-exclamation-triangle"></i> Not Assigned</span>
+                                    }
+                                }
+                            </td>
+                            <td>@task.CreatedBy</td>
+                            <td>@task.Status</td>
+                        </tr>
+                    }
+                    @if (!Model.Any())
+                    {
+                        <tr>
+                            <td colspan="8" class="text-center">No tasks found</td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+
+
+
+<style>
+    
+    .card {
+        border-radius: 20px;
+        overflow: hidden;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+ 
+    .table-hover tbody tr:hover {
+        background-color: #f1f1f1;
+        transform: scale(1.01);
+        transition: all 0.2s ease-in-out;
+    }
+
+    
+    .thead-light th {
+        background-color: #007bff;
+        color: white;
+        font-weight: bold;
+        text-transform: uppercase;
+    }
+
+    
+    .btn-outline-primary:hover, .btn-info:hover, .btn-success:hover {
+        transform: scale(1.05);
+        transition: all 0.2s ease;
+    }
+
+   
+    .badge {
+        font-size: 0.9rem;
+        padding: 0.5rem;
+        border-radius: 10px;
+    }
+
+    .badge-danger {
+        background-color: #dc3545;
+    }
+
+    .badge-warning {
+        background-color: #ffc107;
+    }
+
+    .badge-success {
+        background-color: #28a745;
+    }
+
+    .badge-primary {
+        background-color: #007bff;
+    }
+
+    .btn {
+        font-size: 0.85rem;
+    }
+
+  
+    tbody tr {
+        animation: fadeInUp 0.5s ease-in-out;
+    }
+
+    @@keyframes fadeInUp {
+        from {
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+</style>

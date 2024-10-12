@@ -1,0 +1,146 @@
+﻿@model AssignTasks
+@{
+    ViewBag.Title = "Create Task";
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+}
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet"> 
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> 
+
+<style>
+    body {
+        background-color: #f4f6f9;
+    }
+
+    .form-container {
+        background-color: #ffffff;
+        padding: 30px;
+        border-radius: 15px;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        max-width: 700px;
+        margin: 50px auto;
+        border: 1px solid #e3e3e3;
+    }
+
+        .form-container h2 {
+            color: #007bff;
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+    .form-group label {
+        color: #333;
+        font-weight: bold;
+    }
+
+    .form-control {
+        border-radius: 10px;
+        margin-bottom: 15px;
+        border: 1px solid #ced4da;
+        box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.075);
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        border-radius: 10px;
+        font-size: 18px;
+        padding: 10px 20px;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+    select.form-control {
+        background-color: #f1f1f1;
+        border-color: #ced4da;
+    }
+
+    .form-group p.text-danger {
+        color: #dc3545;
+    }
+
+    .form-group .form-control:focus {
+        border-color: #007bff;
+        box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
+    }
+
+    .text-center input[type="submit"] {
+        background-color: #007bff;
+        border-color: #007bff;
+        color: #ffffff;
+        font-weight: bold;
+    }
+</style>
+
+<div class="container">
+    <div class="form-container">
+        <h2 class="text-center mb-4">Create New Task</h2>
+
+        @using (Html.BeginForm())
+        {
+            <div class="form-group">
+                <label for="Title">Task Title</label>
+                @Html.TextBoxFor(m => m.Title, new { @class = "form-control", placeholder = "Enter Task Title" })
+            </div>
+
+            <div class="form-group">
+                <label for="Description">Description</label>
+                @Html.TextAreaFor(m => m.Description, new { @class = "form-control", placeholder = "Enter Task Description", rows = 4 })
+            </div>
+
+            <div class="form-group">
+                <label for="Deadline">Deadline</label>
+                @Html.TextBoxFor(m => m.Deadline, new { @class = "form-control", type = "date" })
+            </div>
+
+            <div class="form-group">
+                <label for="Priority">Priority</label>
+                @Html.TextBoxFor(m => m.Priority, new { @class = "form-control", placeholder = "Enter Priority (High, Medium, Low)" })
+            </div>
+
+            <div class="form-group">
+                <label for="Category">Category</label>
+                @Html.TextBoxFor(m => m.Category, new { @class = "form-control", placeholder = "Enter Task Category" })
+            </div>
+
+            <div class="form-group">
+                <label for="assignedUserId">Assign to User</label>
+                @{
+                    var users = ViewBag.Users as List<User>;
+                }
+                @if (users != null && users.Any())
+                {
+                    <select name="assignedUserId" class="form-control">
+                        @foreach (var user in users)
+                        {
+                            <option value="@user.UserID">@user.Username</option>
+                        }
+                    </select>
+                }
+                else
+                {
+                    <p class="text-danger">No users available to assign.</p>
+                }
+            </div>
+
+            <div class="form-group">
+                @Html.LabelFor(model => model.Status, htmlAttributes: new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.DropDownListFor(model => model.Status, new List<SelectListItem>
+                        {
+                    new SelectListItem { Text = "Pending", Value = "Pending" },
+                    new SelectListItem { Text = "In Progress", Value = "In Progress" },
+                    new SelectListItem { Text = "Completed", Value = "Completed" }
+                }, "Select Status", new { @class = "form-control" })
+                </div>
+            </div>
+
+            <div class="text-center">
+                <input type="submit" value="Create Task" class="btn btn-primary" />
+            </div>
+        }
+    </div>
+</div>

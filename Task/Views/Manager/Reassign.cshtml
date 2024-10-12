@@ -1,0 +1,78 @@
+﻿@model AssignTasks
+@{
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+}
+@using (Html.BeginForm("Reassign", "Manager", FormMethod.Post, new { @class = "reassign-form" }))
+{
+    @Html.Hidden("id", Model.AssignTaskID) 
+
+    <div class="container mt-4">
+        <h3 class="text-center text-primary mb-4">Reassign Task</h3>
+
+        <div class="card shadow-sm">
+            <div class="card-body">
+                <div class="form-group">
+                    <label for="taskTitle" class="font-weight-bold">Current Task:</label>
+                    <input type="text" class="form-control" id="taskTitle" value="@Model.Title" readonly />
+                </div>
+
+                <div class="form-group">
+                    <label for="userSelect" class="font-weight-bold">Reassign to User:</label>
+                    <select id="userSelect" name="newAssignedUserId" class="form-control">
+                        @foreach (var user in ViewBag.Users as IEnumerable<User>)
+                        {
+                            <option value="@user.UserID" @(user.UserID == Model.AssignedUserID ? "selected" : "")>@user.Username</option>
+                        }
+                    </select>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg btn-block rounded-pill">Reassign Task</button>
+            </div>
+        </div>
+    </div>
+}
+
+
+<style>
+    .reassign-form {
+        max-width: 500px;
+        margin: 0 auto;
+    }
+
+    .form-control[readonly] {
+        background-color: #f5f5f5;
+        border: 1px solid #ccc;
+    }
+
+    .card {
+        border-radius: 10px;
+    }
+
+    .card-body {
+        padding: 2rem;
+    }
+
+    .btn-primary {
+        background-color: #007bff;
+        border-color: #007bff;
+        transition: background-color 0.3s, border-color 0.3s;
+    }
+
+        .btn-primary:hover {
+            background-color: #0056b3;
+            border-color: #004085;
+        }
+
+    .btn-lg {
+        font-size: 1.25rem;
+        padding: .75rem 1.25rem;
+    }
+
+    .rounded-pill {
+        border-radius: 50rem;
+    }
+
+    .form-group {
+        margin-bottom: 1.5rem;
+    }
+</style>

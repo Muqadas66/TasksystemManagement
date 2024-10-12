@@ -1,0 +1,153 @@
+﻿@{
+    ViewBag.Title = "Admin Dashboard";
+}
+@{
+    Layout = "~/Views/Shared/_LayoutAdmin.cshtml";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title</title>
+    
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons/font/bootstrap-icons.css" rel="stylesheet">
+   
+    <style>
+        body {
+            background-color: #f8f9fa;
+            background-image: url('~/Content/user.png'); 
+            background-size: cover; 
+            background-position: center; 
+            background-repeat: no-repeat;
+            
+            position: relative; 
+        }
+
+        .dashboard-container {
+            padding: 30px;
+         
+            background-color: rgba(255, 255, 255, 0.8); 
+            border-radius: 10px; 
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+            position: relative; 
+        }
+
+        .card {
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card-body {
+            padding: 20px;
+        }
+
+        .card-title {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            margin-bottom: 15px;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-light {
+            color: #333;
+            background-color: #f8f9fa;
+            border-color: #f8f9fa;
+            border-radius: 5px;
+        }
+
+            .btn-light:hover {
+                color: #fff;
+                background-color: #007bff;
+                border-color: #007bff;
+            }
+
+        .logout-btn {
+            position: absolute;
+            top: 85px;
+            right: 10px;
+            z-index: auto;
+        }
+    </style>
+</head>
+<body>
+    
+
+    <div class="container dashboard-container">
+
+        <h1 class="mb-4">Admin Dashboard</h1>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-white bg-primary mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">User List</h5>
+                        <p class="card-text">View and manage all users in the system.</p>
+                        <a href="@Url.Action("UserList", "Admin")" class="btn btn-light">Go to User List</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-success mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Create Task</h5>
+                        <p class="card-text">Create new tasks and assign them to users.</p>
+                        <a href="@Url.Action("CreateTask", "Admin")" class="btn btn-light">Go to Create Task</a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-info mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">View All Tasks</h5>
+                        <p class="card-text">View all tasks across the organization.</p>
+                        <a href="@Url.Action("ViewAllTasks", "Admin")" class="btn btn-light">Go to View All Tasks</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- New Row for Settings and Report Cards -->
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card text-white bg-dark mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Setting</h5>
+                        <p class="card-text">Manage your application settings</p>
+                        <a href="@Url.Action("Edit", "Settings")" class="btn btn-light">
+                            <i class="bi bi-gear-fill"></i>
+                            Setting
+                        </a>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card text-white bg-secondary mb-3">
+                    <div class="card-body">
+                        <h5 class="card-title">Report</h5>
+                        <p class="card-text">Check and view reports.</p>
+                        <a href="@Url.Action("TaskReport", "Admin")" class="btn btn-light">
+                            <i class="bi bi-file-earmark-text-fill"></i>
+                            Go to Report
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,199 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - HomePage</title>
+    @Styles.Render("~/Content/css")
+    @Scripts.Render("~/bundles/modernizr")
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
+    <style>
+        .notification-bell {
+            position: relative;
+            font-size: 24px;
+            color: #fff;
+        }
+
+          
+            .notification-bell .unread-dot {
+                position: absolute;
+                top: -5px;
+                right: -5px;
+                height: 12px;
+                width: 12px;
+                background-color: red;
+                border-radius: 50%;
+                border: 2px solid #fff;
+            }
+
+            
+            .notification-bell:hover {
+                color: #f8d7da;
+            }
+
+        
+        .navbar {
+            padding: 15px 30px;
+        }
+        body {
+            display: flex;
+            min-height: 100vh;
+            flex-direction: column;
+            margin: 0;
+        }
+
+        /* Sidebar styles */
+        #wrapper {
+            display: flex;
+            width: 100%;
+        }
+
+        #sidebar {
+            width: 250px;
+            height: 100vh;
+            background-color: #5c4d8c;
+            position: absolute;
+            left: -250px;
+            transition: left 0.3s;
+            z-index: 1000;
+        }
+
+            #sidebar.active {
+                left: 0;
+            }
+
+            #sidebar .nav-link {
+                color: #fff;
+                padding: 15px;
+                text-decoration: none;
+            }
+
+                #sidebar .nav-link:hover {
+                    background-color: #7b6a9a;
+                }
+
+
+        .navbar {
+            background-color: #5c4d8c;
+            color: white;
+            padding: 10px 15px;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1050;
+        }
+
+            .navbar .nav-link {
+                color: white;
+                margin-right: 1px;
+            }
+
+                .navbar .nav-link:hover {
+                    color: #e2e6ea;
+                }
+
+
+        #content-wrapper {
+            padding-top: 60px;
+            width: 100%;
+            position: relative;
+        }
+
+
+        footer {
+            padding: 10px;
+            text-align: center;
+        }
+
+
+        .body-content {
+            overflow: auto;
+            height: calc(100vh - 60px);
+        }
+    </style>
+</head>
+<body>
+    <nav class="navbar navbar-expand-sm navbar-dark">
+        <div class="container-fluid">
+            <span id="menu-toggle" class="navbar-toggler-icon"></span>
+
+            <img src="~/Content/logo2.jpg" alt="Logo" style="height: 40px;" />
+            <a class="navbar-brand" href="#">Employee</a>
+            <div class="collapse navbar-collapse justify-content-center" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        @Html.ActionLink("Home", "Index", "User", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Assigned Tasks", "UserTasks", "User", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Created a Tasks", "GenerateTask", "User", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+                </ul>
+
+            </div>
+
+
+            <ul class="navbar-nav logout-button">
+                <li class="nav-item">
+                    <i class="fas fa-sign-out-alt">
+                        @Html.ActionLink("Logout", "Logout", "Account", null, new { @class = "nav-link" })
+                    </i>
+                </li>
+            </ul>
+        </div>
+    </nav>
+   
+    <div id="wrapper">
+        <div id="sidebar">
+            <nav class="navbar-dark">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        @Html.ActionLink("Home", "Index", "User", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("View Assign Tasks", "UserTasks", "User", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Create Task", "GenerateTask", "User", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("View Created Task", "ViewCreatedTasks", "User", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Update Tasks", "ViewCreatedTasks", "User", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Feedback", "ViewFeedback", "User", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+                    <li class="nav-item">
+                        @Html.ActionLink("Notification", "ViewNotifications", "User", new { area = "" }, new { @class = "nav-link" })
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div id="content-wrapper" class="container-fluid body-content">
+            @RenderBody()
+            <hr />
+            <footer>
+                <p>&copy; @DateTime.Now.Year - Manager Dashboard</p>
+            </footer>
+        </div>
+    </div>
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/bootstrap")
+    @RenderSection("scripts", required: false)
+
+    <script>
+    $(document).ready(function () {
+            $("#menu-toggle").click(function () {
+                $("#sidebar").toggleClass("active");
+            });
+        });</script>
+</body>
+</html>
+

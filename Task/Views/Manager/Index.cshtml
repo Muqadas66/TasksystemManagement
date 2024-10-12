@@ -1,0 +1,82 @@
+﻿@{
+    Layout = "~/Views/Shared/_LayoutManager.cshtml";
+}
+@model IEnumerable<AssignTasks>
+<body>
+    <h2 class="text-center text-primary mb-4">Manager's Dashboard</h2>
+    <div class="text-center">
+        <img src="~/Content/task-management-officetimer.png" style="width: 100%; height: auto;" alt="Task Management" />
+    </div>
+    <div class="container">
+
+        <div class="row">
+            <div class="col-md-3 mb-4">
+                <div class="card text-white bg-success">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-plus"></i> Create New Task</h5>
+                        <a href="@Url.Action("Create", "Manager")" class="btn btn-light">Create Task</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-4">
+                <div class="card text-white bg-info">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-tasks"></i> View All Tasks</h5>
+                        <a href="@Url.Action("ViewAllTasks", "Manager")" class="btn btn-light">View Tasks</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-4">
+                <div class="card text-white bg-warning">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-chart-line"></i> Track Activity</h5>
+                        <a href="@Url.Action("ViewAllTasks", "Manager")" class="btn btn-dark">Track Activity</a>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-3 mb-4">
+                <div class="card text-white bg-danger">
+                    <div class="card-body">
+                        <h5 class="card-title"><i class="fas fa-file-alt"></i> View Reports</h5>
+                        <a href="@Url.Action("CompletedTasks", "Manager")" class="btn btn-light">View Reports</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+<style>
+    body {
+        background-color: darkblue; 
+       
+       
+    }
+
+    .card {
+        border-radius: 10px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card .btn {
+            text-transform: uppercase;
+            font-weight: bold;
+            border-radius: 20px; 
+        }
+
+    .card-title i {
+        margin-right: 10px;
+    }
+</style>
+
+<link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet"> <!-- For icons -->
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
